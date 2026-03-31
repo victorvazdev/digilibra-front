@@ -22,13 +22,13 @@
         <section id="view-books" class="view-section active">
             <h2>Gerenciamento de Livros</h2>
 
-            <div class="controls-panel" style="background-color: #e0f2fe;">
+            <div class="controls-panel controls-panel-highlight">
                 <div class="input-group">
                     <label>Nome do Livro:</label>
                     <input type="text" id="b-name" placeholder="Ex: Como Treinar Bíceps">
                 </div>
                 <div class="input-group">
-                    <label>ID do Autor:</label>
+                    <label>ID do Autor(a):</label>
                     <input type="number" id="b-author-id" placeholder="Ex: 1">
                 </div>
                 <div class="input-group">
@@ -52,12 +52,11 @@
                     <input type="text" id="search-b-name">
                 </div>
                 <div class="input-group">
-                    <label>ID do Autor para busca</label>
+                    <label>ID do Autor(a) para busca</label>
                     <input type="number" id="search-b-author">
                 </div>
                 <button class="btn" onclick="searchBook()">Buscar Unitário</button>
-                <button class="btn" style="background: #64748b;" onclick="loadBooks()">Limpar / Recarregar
-                    Todos</button>
+                <button class="btn btn-secondary" onclick="loadBooks()">Limpar / Recarregar Todos</button>
             </div>
 
             <div class="grid" id="books-grid"></div>
@@ -66,22 +65,21 @@
         <section id="view-authors" class="view-section">
             <h2>Gerenciamento de Autores</h2>
 
-            <div class="controls-panel" style="background-color: #e0f2fe;">
+            <div class="controls-panel controls-panel-highlight">
                 <div class="input-group">
-                    <label>Nome do Novo Autor</label>
+                    <label>Nome do Novo Autor(a):</label>
                     <input type="text" id="a-name" placeholder="Ex: Rafael V. Martins">
                 </div>
-                <button class="btn btn-success" onclick="addAuthor()">Adicionar Autor</button>
+                <button class="btn btn-success" onclick="addAuthor()">Adicionar Autor(a)</button>
             </div>
 
             <div class="controls-panel">
                 <div class="input-group">
-                    <label>Buscar Autor (Por ID)</label>
-                    <input type="number" id="search-a-id" placeholder="ID do Autor">
+                    <label>Buscar Autor(a) (Por ID):</label>
+                    <input type="number" id="search-a-id" placeholder="ID do Autor(a)">
                 </div>
                 <button class="btn" onclick="searchAuthor()">Buscar Unitário</button>
-                <button class="btn" style="background: #64748b;" onclick="loadAuthors()">Limpar / Recarregar
-                    Todos</button>
+                <button class="btn btn-secondary" onclick="loadAuthors()">Limpar / Recarregar Todos</button>
             </div>
 
             <div class="grid" id="authors-grid"></div>
@@ -90,7 +88,7 @@
 
     <div id="update-modal" class="modal-overlay">
         <div class="modal-content">
-            <h3 style="color: var(--primary); margin-bottom: 0.5rem;">Atualizar Livro</h3>
+            <h3 class="modal-title">Atualizar Livro</h3>
 
             <input type="hidden" id="upd-id">
 
@@ -112,30 +110,34 @@
             </div>
 
             <div class="modal-actions">
-                <button class="btn" style="background: #64748b;" onclick="closeUpdateModal()">Cancelar</button>
+                <button class="btn btn-secondary" onclick="closeUpdateModal()">Cancelar</button>
                 <button class="btn btn-success" onclick="submitUpdateBook()">Salvar Alterações</button>
             </div>
         </div>
     </div>
+    
     <div id="update-author-modal" class="modal-overlay">
         <div class="modal-content">
-            <h3 style="color: var(--primary); margin-bottom: 0.5rem;">Atualizar Autor</h3>
+            <h3 class="modal-title">Atualizar Autor(a)</h3>
 
             <input type="hidden" id="upd-author-id">
 
             <div class="input-group">
-                <label>Nome do Autor</label>
+                <label>Nome do Autor(a)</label>
                 <input type="text" id="upd-author-name">
             </div>
 
             <div class="modal-actions">
-                <button class="btn" style="background: #64748b;" onclick="closeUpdateAuthorModal()">Cancelar</button>
+                <button class="btn btn-secondary" onclick="closeUpdateAuthorModal()">Cancelar</button>
                 <button class="btn btn-success" onclick="submitUpdateAuthor()">Salvar Alterações</button>
             </div>
         </div>
     </div>
 
-    <script src="scripts.js"></script>
+    <script src="api.js"></script>
+    <script src="authors.js"></script>
+    <script src="books.js"></script>
+    <script src="app.js"></script>
 </body>
 
 </html>

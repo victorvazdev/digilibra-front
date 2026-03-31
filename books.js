@@ -1,126 +1,3 @@
-const API_URL = 'http://127.0.0.1:8000';
-let currentAuthorsList = [];
-
-// ================= SPA ROTEAMENTO BÁSICO =================
-function navigate(view) {
-    document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
-    document.getElementById(`view-${view}`).classList.add('active');
-
-    if (view === 'books') loadBooks();
-    if (view === 'authors') loadAuthors();
-}
-
-// ================= MÓDULO: AUTORES =================
-
-// GET /authors
-async function loadAuthors() {
-    try {
-        const res = await fetch(`${API_URL}/authors`);
-        const data = await res.json();
-        renderAuthors(data.authors || []);
-    } catch (e) {
-        console.error(e);
-        alert('Erro ao carregar autores.');
-    }
-}
-
-// GET /author (Unitário)
-async function searchAuthor() {
-    const id = document.getElementById('search-a-id').value;
-    if (!id) return alert('Informe o ID do autor');
-    try {
-        const res = await fetch(`${API_URL}/author?id=${id}`);
-        if (res.status === 404) return alert('Autor não encontrado');
-        const data = await res.json();
-        renderAuthors([data]); // Renderiza como array para reaproveitar a função
-    } catch (e) {
-        console.error(e);
-        alert('Erro ao carregar autor.');
-    }
-}
-
-// POST /author
-async function addAuthor() {
-    const name = document.getElementById('a-name').value;
-    if (!name) return alert('Preencha o nome do autor!');
-    if (/^[\d\s]+$/.test(name)) return alert('O nome do autor não pode ser composto apenas por números!');
-
-    const formData = new FormData();
-    formData.append('name', name);
-
-    const res = await fetch(`${API_URL}/author`, {
-        method: 'POST',
-        body: formData
-    });
-
-    if (res.ok) {
-        alert('Autor adicionado!');
-        document.getElementById('a-name').value = '';
-        loadAuthors();
-    } else {
-        const err = await res.json();
-        alert(err.message);
-    }
-}
-
-// DELETE /author
-async function deleteAuthor(id) {
-    if (!confirm(`Deseja mesmo deletar o autor ID ${id}?`)) return;
-    const res = await fetch(`${API_URL}/author?id=${id}`, { method: 'DELETE' });
-    if (res.ok) loadAuthors();
-    else alert('Erro ao deletar autor.');
-}
-
-// PUT /update_author
-async function submitUpdateAuthor() {
-    const id = document.getElementById('upd-author-id').value;
-    const newName = document.getElementById('upd-author-name').value;
-
-    if (!newName) {
-        alert("O nome do autor não pode ficar vazio!");
-        return;
-    }
-
-    const formData = new FormData();
-    formData.append('id', id);
-    formData.append('name', newName);
-
-    const res = await fetch(`${API_URL}/update_author`, {
-        method: 'PUT',
-        body: formData
-    });
-
-    if (res.ok) {
-        closeUpdateAuthorModal();
-        loadAuthors();
-    } else {
-        alert('Erro ao atualizar autor.');
-    }
-}
-
-// Renderizador DOM Autores
-function renderAuthors(authors) {
-    currentAuthorsList = authors;
-    const grid = document.getElementById('authors-grid');
-    grid.innerHTML = '';
-    
-    authors.forEach(a => {
-        grid.innerHTML += `
-            <div class="card">
-                <h3>${a.name}</h3>
-                <p><strong>ID do Autor:</strong> ${a.id}</p>
-                <div class="card-actions">
-                    <button class="btn" style="background:#eab308; flex:1;" onclick="openUpdateAuthorModal(${a.id})">Editar</button>
-                    <button class="btn btn-danger" style="flex:1;" onclick="deleteAuthor(${a.id})">Excluir</button>
-                </div>
-            </div>
-        `;
-    });
-}
-
-
-// ================= MÓDULO: LIVROS =================
-
 // GET /books
 async function loadBooks() {
     try {
@@ -137,7 +14,7 @@ async function loadBooks() {
 async function searchBook() {
     const name = document.getElementById('search-b-name').value;
     const author_id = document.getElementById('search-b-author').value;
-    if (!name || !author_id) return alert('Informe o nome e o ID do autor para buscar');
+    if (!name || !author_id) return alert('Informe o nome e o ID do autor(a) para buscar');
 
     try {
         const res = await fetch(`${API_URL}/book?name=${name}&author_id=${author_id}`);
@@ -162,7 +39,7 @@ async function addBook() {
 
     if (!name) return alert('Preencha o nome do livro!');
     if (/^[\d\s]+$/.test(name)) return alert('O nome do livro não pode ser composto apenas por números!');
-    if (!author_id) return alert('Preencha o ID do autor do livro!');
+    if (!author_id) return alert('Preencha o ID do autor(a) do livro!');
     if (!quantity) return alert('Preencha a quantidade de livros disponíveis!');
     if (!value) return alert('Preencha valor em R$ do livro!');
     if (!release_date) return alert('Preencha a data de lançamento do livro!');
@@ -249,8 +126,8 @@ function renderBooks(books) {
                 <p><strong>Preço:</strong> R$ ${b.value}</p>
                 <p><strong>ID Livro:</strong> ${b.id}</p>
                 <div class="card-actions">
-                    <button class="btn" style="background:#eab308; flex:1;" onclick="openUpdateModal(${b.id})">Editar</button>
-                    <button class="btn btn-danger" style="flex:1;" onclick="deleteBook(${b.id})">Excluir</button>
+                    <button class="btn btn-warning flex-1" onclick="openUpdateModal(${b.id})">Editar</button>
+                    <button class="btn btn-danger flex-1" onclick="deleteBook(${b.id})">Excluir</button>
                 </div>
             </div>
         `;
@@ -274,21 +151,3 @@ function openUpdateModal(id) {
 function closeUpdateModal() {
     document.getElementById('update-modal').classList.remove('active');
 }
-
-// Lógica do modal de autores
-function openUpdateAuthorModal(id) {
-    const author = currentAuthorsList.find(a => a.id === id);
-    if (!author) return;
-
-    document.getElementById('upd-author-id').value = author.id;
-    document.getElementById('upd-author-name').value = author.name || '';
-
-    document.getElementById('update-author-modal').classList.add('active');
-}
-
-function closeUpdateAuthorModal() {
-    document.getElementById('update-author-modal').classList.remove('active');
-}
-
-// Inicia carregando os livros
-window.onload = loadBooks;

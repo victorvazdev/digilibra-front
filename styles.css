@@ -91,6 +91,11 @@ main {
     align-items: end;
 }
 
+/* Nova classe para o painel de destaque */
+.controls-panel-highlight {
+    background-color: #e0f2fe;
+}
+
 .input-group {
     display: flex;
     flex-direction: column;
@@ -121,6 +126,20 @@ button.btn-danger {
 
 button.btn-success {
     background-color: var(--success);
+}
+
+/* Nova classe para botão secundário/cinza */
+.btn-secondary {
+    background-color: #64748b;
+}
+
+/* Classes extras para os botões gerados pelo JS (Editar e Excluir) */
+.btn-warning {
+    background-color: #eab308;
+}
+
+.flex-1 {
+    flex: 1;
 }
 
 /* Grid de Cards */
@@ -160,13 +179,13 @@ button.btn-success {
 
 /* Estilos do Modal */
 .modal-overlay {
-    display: none; /* Oculto por padrão */
+    display: none;
     position: fixed;
     top: 0; 
     left: 0; 
     width: 100%; 
     height: 100%;
-    background: rgba(0, 0, 0, 0.5); /* Fundo escuro semi-transparente */
+    background: rgba(0, 0, 0, 0.5);
     z-index: 1000;
     justify-content: center;
     align-items: center;
@@ -174,7 +193,7 @@ button.btn-success {
 
 .modal-overlay.active {
     display: flex;
-    animation: fadeIn 0.2s; /* Reaproveitando sua animação fadeIn */
+    animation: fadeIn 0.2s;
 }
 
 .modal-content {
@@ -187,6 +206,12 @@ button.btn-success {
     display: flex;
     flex-direction: column;
     gap: 1rem;
+}
+
+/* Nova classe para os títulos dos modais */
+.modal-title {
+    color: var(--primary);
+    margin-bottom: 0.5rem;
 }
 
 .modal-actions {
