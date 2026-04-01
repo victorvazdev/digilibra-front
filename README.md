@@ -48,9 +48,9 @@ Para inicializar o frontend, basta dar um duplo clique no arquivo principal:
 ## 📂 Estrutura de Arquivos
 A aplicação adota o princípio de Separation of Concerns (Separação de Responsabilidades), dividindo a lógica de negócio em módulos independentes:
 
-`index.html`: Estrutura principal, templates e containers da SPA.
-`styles.css`: Regras de design, cores, responsividade e layout (Grid/Flexbox).
-`api.js`: Configurações globais e estado base do sistema.
-`app.js`: Lógica de roteamento da SPA e inicialização de eventos.
-`authors.js`: Lógica de negócio, CRUD e renderização do módulo de Autores.
-`books.js`: Lógica de negócio, CRUD e renderização do módulo de Livros.
+* `index.html`: Estrutura principal, templates e containers da SPA.
+* `styles.css`: Regras de design, cores, responsividade e layout (Grid/Flexbox).
+* `api.js`: Configurações globais e estado base do sistema.
+* `app.js`: Lógica de roteamento da SPA e inicialização de eventos.
+* `authors.js`: Lógica de negócio, CRUD e renderização do módulo de Autores.
+* `books.js`: Lógica de negócio, CRUD e renderização do módulo de Livros.
