@@ -76,6 +76,7 @@ async function deleteBook(id) {
 async function submitUpdateBook() {
     const id = document.getElementById('upd-id').value;
     const newName = document.getElementById('upd-name').value;
+    const newAuthorId = document.getElementById('upd-author-id').value;
     const newValue = document.getElementById('upd-value').value;
     const newQuantity = document.getElementById('upd-quantity').value;
     const newReleaseDate = document.getElementById('upd-release-date').value;
@@ -83,6 +84,7 @@ async function submitUpdateBook() {
     const formData = new FormData();
     formData.append('id', id);
     if (newName) formData.append('name', newName);
+    if (newAuthorId) formData.append('author_id', parseInt(newAuthorId));
     if (newValue) formData.append('value', parseFloat(newValue));
     if (newQuantity) formData.append('quantity', parseInt(newQuantity));
     if (newReleaseDate) formData.append('release_date', newReleaseDate);
@@ -142,9 +144,19 @@ function openUpdateModal(id) {
 
     document.getElementById('upd-id').value = book.id;
     document.getElementById('upd-name').value = book.name || '';
+    document.getElementById('upd-author-id').value = book.author_id || '';
     document.getElementById('upd-value').value = book.value || '';
     document.getElementById('upd-quantity').value = book.quantity || '';
-    document.getElementById('upd-release-date').value = book.release_date || '';
+    // Convertendo a data do servidor de volta para AAAA-MM-DD para o input type="date" ler
+    let dataInput = '';
+    if (book.release_date) {
+        const dataObj = new Date(book.release_date);
+        const dia = String(dataObj.getUTCDate()).padStart(2, '0');
+        const mes = String(dataObj.getUTCMonth() + 1).padStart(2, '0');
+        const ano = dataObj.getUTCFullYear();
+        dataInput = `${ano}-${mes}-${dia}`;
+    }
+    document.getElementById('upd-release-date').value = dataInput;
 
     document.getElementById('update-modal').classList.add('active');
 }
