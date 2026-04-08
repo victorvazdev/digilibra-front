@@ -109,12 +109,13 @@ function renderBooks(books) {
     books.forEach(b => {
         let dataFormatada = "N/A";
         if (b.release_date) {
-            const partesData = b.release_date.split('-');
-            if (partesData.length === 3) {
-                dataFormatada = `${partesData[2]}/${partesData[1]}/${partesData[0]}`;
-            } else {
-                dataFormatada = b.release_date;
-            }
+            const dataObj = new Date(b.release_date);
+            
+            const dia = String(dataObj.getUTCDate()).padStart(2, '0');
+            const mes = String(dataObj.getUTCMonth() + 1).padStart(2, '0');
+            const ano = dataObj.getUTCFullYear();
+            
+            dataFormatada = `${dia}/${mes}/${ano}`;
         }
 
         grid.innerHTML += `
