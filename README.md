@@ -35,7 +35,7 @@ Caso precise alterar o endereço da API, edite o arquivo api.js localizado na ra
 
 ```javascript
 // api.js
-const API_URL = 'http://127.0.0.1:8000'; // Altere para o endereço e porta corretos da sua API
+const API_URL = 'http://127.0.0.1:8000';
 ```
 
 ### 3. Executando a Aplicação (Comandos de Inicialização)
